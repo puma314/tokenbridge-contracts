@@ -7,6 +7,30 @@ import "./MessageDelivery.sol";
 import "../MessageRelay.sol";
 
 contract BasicForeignAMB is BasicAMB, MessageRelay, MessageDelivery {
+    function receiveSuccinct(address srcAddress, bytes message) external {
+        address succinctAMB = succinctAMBAddress();
+        require(msg.sender == succinctAMB, "Only Succinct AMB can call this function");
+        address otherSideAMB = otherSideAMBAddress();
+        require(srcAddress == otherSideAMB, "Only other side AMB can pass a message call to this contract.");
+        handleMessage(message);
+    }
+
+    /**
+     * Parses given message, processes a call inside it
+     * @param _message relayed message
+     */
+    function handleMessage(bytes _message) internal {
+        bytes32 msgId;
+        address sender;
+        address executor;
+        uint32 gasLimit;
+        uint8 dataType;
+        uint256[2] memory chainIds;
+        bytes memory data;
+        (msgId, sender, executor, gasLimit, dataType, chainIds, data) = ArbitraryMessage.unpackData(_message);
+        _executeMessage(msgId, sender, executor, gasLimit, dataType, chainIds, data);
+    }
+
     /**
     * @dev Validates provided signatures and relays a given message
     * @param _data bytes to be relayed

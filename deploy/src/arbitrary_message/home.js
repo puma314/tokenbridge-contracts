@@ -41,7 +41,7 @@ async function initializeBridge({ validatorsBridge, bridge, initialNonce }) {
   console.log('\ninitializing Home Bridge with following parameters:\n')
   console.log(`SOURCE_CHAIN_ID: ${homeChainId}, DESTINATION_CHAIN_ID: ${foreignChainId}, Home Validators: ${validatorsBridge.options.address},
   HOME_MAX_AMOUNT_PER_TX (gas limit per call): ${HOME_MAX_AMOUNT_PER_TX},
-  HOME_GAS_PRICE: ${HOME_GAS_PRICE}, HOME_REQUIRED_BLOCK_CONFIRMATIONS : ${HOME_REQUIRED_BLOCK_CONFIRMATIONS}
+  HOME_GAS_PRICE: ${HOME_GAS_PRICE}, HOME_REQUIRED_BLOCK_CONFIRMATIONS : ${HOME_REQUIRED_BLOCK_CONFIRMATIONS}, HOME_BRIDGE_OWNER=${HOME_BRIDGE_OWNER}
   `)
   const initializeHomeBridgeData = await bridge.methods
     .initialize(

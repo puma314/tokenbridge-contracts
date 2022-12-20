@@ -86,8 +86,11 @@ const verifyContract = async (contract, params, type) => {
     if (result.data.message === REQUEST_STATUS.OK) {
       console.log(`${params.address} verified in ${type}`)
       return true
+    } else {
+      console.log(`${params.address} not verified in ${type}`)
     }
   } catch (e) {
+    console.log("Error with verification");
     return false
   }
   return false
@@ -126,7 +129,7 @@ const verifier = async ({ artifact, address, constructorArguments, apiUrl, apiKe
       const verified = await verifyContract(contract, params, type)
       if (!verified) {
         console.log('Verification failed')
-        // retry()
+        retry()
       }
     })
   } catch (e) {

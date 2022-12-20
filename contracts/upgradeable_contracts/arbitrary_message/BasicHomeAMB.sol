@@ -18,8 +18,6 @@ contract BasicHomeAMB is BasicAMB, MessageDelivery {
     uint256 internal constant SEND_TO_MANUAL_LANE = 0x80;
 
     function receiveSuccinct(address srcAddress, bytes message) external {
-        // These are the minimal changes required to support Succinct AMB integration. Note that the validators
-        // can still call `executeAffirmation` for the Gnosis AMB, so this additions function as an OR not an AND.
         address succinctAMB = succinctAMBAddress();
         require(msg.sender == succinctAMB, "Only Succinct AMB can call this function");
         address otherSideAMB = otherSideAMBAddress();
